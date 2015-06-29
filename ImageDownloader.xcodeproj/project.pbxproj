@@ -14,6 +14,7 @@
 		1912B46B1B411AC200DFCBC3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1912B46A1B411AC200DFCBC3 /* Images.xcassets */; };
 		1912B46E1B411AC200DFCBC3 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1912B46C1B411AC200DFCBC3 /* LaunchScreen.xib */; };
 		1912B47A1B411AC200DFCBC3 /* ImageDownloaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1912B4791B411AC200DFCBC3 /* ImageDownloaderTests.m */; };
+		1912B4861B411C2E00DFCBC3 /* ImageProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1912B4851B411C2E00DFCBC3 /* ImageProvider.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		1912B4731B411AC200DFCBC3 /* ImageDownloaderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageDownloaderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1912B4781B411AC200DFCBC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1912B4791B411AC200DFCBC3 /* ImageDownloaderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageDownloaderTests.m; sourceTree = "<group>"; };
+		1912B4841B411C2E00DFCBC3 /* ImageProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProvider.h; sourceTree = "<group>"; };
+		1912B4851B411C2E00DFCBC3 /* ImageProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageProvider.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +84,7 @@
 		1912B45C1B411AC200DFCBC3 /* ImageDownloader */ = {
 			isa = PBXGroup;
 			children = (
+				1912B4831B411C0200DFCBC3 /* ImageProvider */,
 				1912B4611B411AC200DFCBC3 /* AppDelegate.h */,
 				1912B4621B411AC200DFCBC3 /* AppDelegate.m */,
 				1912B4641B411AC200DFCBC3 /* ViewController.h */,
@@ -117,6 +121,15 @@
 				1912B4781B411AC200DFCBC3 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1912B4831B411C0200DFCBC3 /* ImageProvider */ = {
+			isa = PBXGroup;
+			children = (
+				1912B4841B411C2E00DFCBC3 /* ImageProvider.h */,
+				1912B4851B411C2E00DFCBC3 /* ImageProvider.m */,
+			);
+			name = ImageProvider;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,6 +232,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1912B4861B411C2E00DFCBC3 /* ImageProvider.m in Sources */,
 				1912B4661B411AC200DFCBC3 /* ViewController.m in Sources */,
 				1912B4631B411AC200DFCBC3 /* AppDelegate.m in Sources */,
 				1912B4601B411AC200DFCBC3 /* main.m in Sources */,

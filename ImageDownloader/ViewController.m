@@ -7,21 +7,51 @@
 //
 
 #import "ViewController.h"
+#import "ImageProvider.h"
 
-@interface ViewController ()
+static const NSTimeInterval kImageFadeInAnimationTime = 0.3;
 
+@interface ViewController () <ImageProviderDelegate>
+
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (strong, nonatomic) ImageProvider *imageProvider;
 @end
 
 @implementation ViewController
 
+#pragma mark - UIViewController
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    self.imageProvider = [[ImageProvider alloc] init];
+    self.imageProvider.delegate = self;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - IBActions
+
+- (IBAction)downloadImageButtonPressed:(id)sender {
+    [self.imageProvider provideImageForUrlPath:@"http://instantsite.ru/gallery/image.php?album_id=12&image_id=19&view=no_count"];
+}
+
+#pragma mark - ImageProviderDelegate
+
+- (void)imageProvider:(ImageProvider*)imageProvider
+      didProvideImage:(UIImage*)image
+           forURLPath:(NSString*)urlPath{
+    
+    self.imageView.image = image;
+    [self animateImageAppearance];
+}
+
+
+#pragma mark - private
+
+- (void)animateImageAppearance{
+    CATransition *transition = [CATransition animation];
+    transition.duration = kImageFadeInAnimationTime;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionFade;
+    [self.imageView.layer addAnimation:transition forKey:nil];
 }
 
 @end
