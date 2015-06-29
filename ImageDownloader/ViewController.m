@@ -13,10 +13,8 @@ static const NSTimeInterval kImageFadeInAnimationTime = 0.3;
 
 @interface ViewController () <ImageProviderDelegate>
 
-@property (nonatomic, weak) IBOutlet UIImageView  *imageView;
-
-@property (nonatomic, strong) ImageProvider *imageProvider;
-
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (strong, nonatomic) ImageProvider *imageProvider;
 @end
 
 @implementation ViewController
