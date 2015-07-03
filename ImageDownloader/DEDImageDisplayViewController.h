@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface DEDImageDisplayViewController : UIViewController
 
+- (void)setImageURLPath:(NSString*)imageUrlPath;
 
 @end
 

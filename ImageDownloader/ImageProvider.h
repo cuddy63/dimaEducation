@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+
 @class ImageProvider,UIImage;
 
 @protocol ImageProviderDelegate <NSObject>
@@ -14,6 +15,9 @@
 - (void)imageProvider:(ImageProvider*)imageProvider
       didProvideImage:(UIImage*)image
            forURLPath:(NSString*)urlPath;
+
+- (void)imageProvider:(ImageProvider *)imageProvider
+     didFailWithError:(NSError*)error;
 
 @end
 

@@ -9,12 +9,13 @@
 /* Begin PBXBuildFile section */
 		1912B4601B411AC200DFCBC3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1912B45F1B411AC200DFCBC3 /* main.m */; };
 		1912B4631B411AC200DFCBC3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1912B4621B411AC200DFCBC3 /* AppDelegate.m */; };
-		1912B4661B411AC200DFCBC3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1912B4651B411AC200DFCBC3 /* ViewController.m */; };
+		1912B4661B411AC200DFCBC3 /* DEDImageDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1912B4651B411AC200DFCBC3 /* DEDImageDisplayViewController.m */; };
 		1912B4691B411AC200DFCBC3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1912B4671B411AC200DFCBC3 /* Main.storyboard */; };
 		1912B46B1B411AC200DFCBC3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1912B46A1B411AC200DFCBC3 /* Images.xcassets */; };
 		1912B46E1B411AC200DFCBC3 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1912B46C1B411AC200DFCBC3 /* LaunchScreen.xib */; };
 		1912B47A1B411AC200DFCBC3 /* ImageDownloaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1912B4791B411AC200DFCBC3 /* ImageDownloaderTests.m */; };
 		1912B4861B411C2E00DFCBC3 /* ImageProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1912B4851B411C2E00DFCBC3 /* ImageProvider.m */; };
+		B806317A1B45223D009FB379 /* DEDTextInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B80631791B45223D009FB379 /* DEDTextInputViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,8 +34,8 @@
 		1912B45F1B411AC200DFCBC3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1912B4611B411AC200DFCBC3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1912B4621B411AC200DFCBC3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		1912B4641B411AC200DFCBC3 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		1912B4651B411AC200DFCBC3 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		1912B4641B411AC200DFCBC3 /* DEDImageDisplayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DEDImageDisplayViewController.h; sourceTree = "<group>"; };
+		1912B4651B411AC200DFCBC3 /* DEDImageDisplayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DEDImageDisplayViewController.m; sourceTree = "<group>"; };
 		1912B4681B411AC200DFCBC3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1912B46A1B411AC200DFCBC3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1912B46D1B411AC200DFCBC3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -43,6 +44,8 @@
 		1912B4791B411AC200DFCBC3 /* ImageDownloaderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageDownloaderTests.m; sourceTree = "<group>"; };
 		1912B4841B411C2E00DFCBC3 /* ImageProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProvider.h; sourceTree = "<group>"; };
 		1912B4851B411C2E00DFCBC3 /* ImageProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageProvider.m; sourceTree = "<group>"; };
+		B80631781B45223D009FB379 /* DEDTextInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DEDTextInputViewController.h; path = ImageDownloader.xcodeproj/../DEDTextInputViewController.h; sourceTree = SOURCE_ROOT; };
+		B80631791B45223D009FB379 /* DEDTextInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DEDTextInputViewController.m; path = ImageDownloader.xcodeproj/../DEDTextInputViewController.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,11 +88,13 @@
 			isa = PBXGroup;
 			children = (
 				1912B4831B411C0200DFCBC3 /* ImageProvider */,
+				1912B4641B411AC200DFCBC3 /* DEDImageDisplayViewController.h */,
+				1912B4651B411AC200DFCBC3 /* DEDImageDisplayViewController.m */,
+				B80631781B45223D009FB379 /* DEDTextInputViewController.h */,
+				B80631791B45223D009FB379 /* DEDTextInputViewController.m */,
+				1912B4671B411AC200DFCBC3 /* Main.storyboard */,
 				1912B4611B411AC200DFCBC3 /* AppDelegate.h */,
 				1912B4621B411AC200DFCBC3 /* AppDelegate.m */,
-				1912B4641B411AC200DFCBC3 /* ViewController.h */,
-				1912B4651B411AC200DFCBC3 /* ViewController.m */,
-				1912B4671B411AC200DFCBC3 /* Main.storyboard */,
 				1912B46A1B411AC200DFCBC3 /* Images.xcassets */,
 				1912B46C1B411AC200DFCBC3 /* LaunchScreen.xib */,
 				1912B45D1B411AC200DFCBC3 /* Supporting Files */,
@@ -233,7 +238,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1912B4861B411C2E00DFCBC3 /* ImageProvider.m in Sources */,
-				1912B4661B411AC200DFCBC3 /* ViewController.m in Sources */,
+				1912B4661B411AC200DFCBC3 /* DEDImageDisplayViewController.m in Sources */,
+				B806317A1B45223D009FB379 /* DEDTextInputViewController.m in Sources */,
 				1912B4631B411AC200DFCBC3 /* AppDelegate.m in Sources */,
 				1912B4601B411AC200DFCBC3 /* main.m in Sources */,
 			);
@@ -430,6 +436,7 @@
 				1912B47F1B411AC200DFCBC3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1912B4801B411AC200DFCBC3 /* Build configuration list for PBXNativeTarget "ImageDownloaderTests" */ = {
 			isa = XCConfigurationList;
@@ -438,6 +445,7 @@
 				1912B4821B411AC200DFCBC3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
