@@ -21,6 +21,7 @@
 
 @property (weak, nonatomic) id <ImageProviderDelegate> delegate;
 
++ (instancetype)sharedInstance;
 - (void)provideImageForUrlPath:(NSString*)urlPath;
 
 @end

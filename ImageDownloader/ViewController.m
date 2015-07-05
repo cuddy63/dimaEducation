@@ -14,7 +14,7 @@ static const NSTimeInterval kImageFadeInAnimationTime = 0.3;
 @interface ViewController () <ImageProviderDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (strong, nonatomic) ImageProvider *imageProvider;
+
 @end
 
 @implementation ViewController
@@ -23,14 +23,13 @@ static const NSTimeInterval kImageFadeInAnimationTime = 0.3;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.imageProvider = [[ImageProvider alloc] init];
-    self.imageProvider.delegate = self;
+    [ImageProvider sharedInstance].delegate = self;
 }
 
 #pragma mark - IBActions
 
 - (IBAction)downloadImageButtonPressed:(id)sender {
-    [self.imageProvider provideImageForUrlPath:@"http://instantsite.ru/gallery/image.php?album_id=12&image_id=19&view=no_count"];
+    [[ImageProvider sharedInstance] provideImageForUrlPath:@"http://instantsite.ru/gallery/image.php?album_id=12&image_id=19&view=no_count"];
 }
 
 #pragma mark - ImageProviderDelegate
@@ -38,7 +37,6 @@ static const NSTimeInterval kImageFadeInAnimationTime = 0.3;
 - (void)imageProvider:(ImageProvider*)imageProvider
       didProvideImage:(UIImage*)image
            forURLPath:(NSString*)urlPath{
-    
     self.imageView.image = image;
     [self animateImageAppearance];
 }

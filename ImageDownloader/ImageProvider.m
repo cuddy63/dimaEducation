@@ -17,12 +17,25 @@
 
 @implementation ImageProvider
 
+#pragma mark - init&dealloc
+
 - (instancetype)init{
     self = [super init];
     if (self) {
         downloadQueue = dispatch_queue_create("Image Download Queue", 0);
     }
     return self;
+}
+
+#pragma mark - public
+
++ (instancetype)sharedInstance {
+    static ImageProvider *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    return sharedInstance;
 }
 
 - (void)provideImageForUrlPath:(NSString*)urlPath{
