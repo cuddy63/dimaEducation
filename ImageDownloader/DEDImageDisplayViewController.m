@@ -46,7 +46,7 @@ static const NSTimeInterval kImageFadeInAnimationTime = 0.3;
     
     DEDImageProviderBlock block = ^(UIImage *image, NSError *error)
     {
-        if (error == nil || image != nil)
+        if (error == nil && image != nil)
             [weakSelf showImage:image];
         else
             [weakSelf showAlertWithError:error];
