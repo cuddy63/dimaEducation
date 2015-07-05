@@ -24,7 +24,7 @@ static const NSTimeInterval kImageFadeInAnimationTime = 0.3;
     if (_imageURLPath != imageUrlPath && ![_imageURLPath isEqualToString:imageUrlPath]) {
         _imageURLPath = imageUrlPath;
         if (self.isViewLoaded)
-            [[ImageProvider sharedInstance] provideImageForUrlPath:self.imageURLPath];
+            [self fetchData];
     }
 }
 
@@ -32,33 +32,43 @@ static const NSTimeInterval kImageFadeInAnimationTime = 0.3;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [ImageProvider sharedInstance].delegate = self;
     if (self.imageURLPath)
-         [[ImageProvider sharedInstance] provideImageForUrlPath:self.imageURLPath];
+        [self fetchData];
 }
 
-#pragma mark - IBActions
+#pragma mark - private
 
+- (void) fetchData{
+    if (self.imageURLPath != nil && self.isViewLoaded)
+        return;
+    
+    __weak typeof(self) weakSelf = self;
+    
+    DEDImageProviderBlock block = ^(UIImage *image, NSError *error)
+    {
+        if (error == nil || image != nil)
+            [weakSelf showImage:image];
+        else
+            [weakSelf showAlertWithError:error];
+    };
+    
+    [[ImageProvider sharedInstance] provideImageForUrlPath:self.imageURLPath
+                                           completionBlock:block];
+}
 
-#pragma mark - ImageProviderDelegate
-
-- (void)imageProvider:(ImageProvider*)imageProvider
-      didProvideImage:(UIImage*)image
-           forURLPath:(NSString*)urlPath{
+- (void)showImage:(UIImage*)image{
     self.imageView.image = image;
     [self animateImageAppearance];
 }
 
 
-- (void)imageProvider:(ImageProvider *)imageProvider didFailWithError:(NSError *)error{
+- (void)showAlertWithError:(NSError *)error{
     [[[UIAlertView alloc] initWithTitle:@"Download failed"
-                               message:error.localizedDescription
-                              delegate:nil
-                     cancelButtonTitle:@"OK"
-                     otherButtonTitles:nil] show];
+                                message:error.localizedDescription
+                               delegate:nil
+                      cancelButtonTitle:@"OK"
+                      otherButtonTitles:nil] show];
 }
-
-#pragma mark - private
 
 - (void)animateImageAppearance{
     CATransition *transition = [CATransition animation];

@@ -46,12 +46,14 @@ static NSString * const kImageProviderErrorDomain = @"ImageProviderErrorDomain";
     return sharedInstance;
 }
 
-- (void)provideImageForUrlPath:(NSString*)urlPath {
+- (void)provideImageForUrlPath:(NSString*)urlPath
+               completionBlock:(DEDImageProviderBlock)completion
+{
     urlPath = [urlPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSURL   *imageURL   = [NSURL URLWithString:urlPath];
     if (imageURL == nil || imageURL.absoluteString.length == 0) {
-        [self finishDownloadWithErrorCode:kInvalidURLErrorCode];
+        [self finishDownloadWithErrorCode:kInvalidURLErrorCode completion:completion];
         return;
     }
     
@@ -61,30 +63,33 @@ static NSString * const kImageProviderErrorDomain = @"ImageProviderErrorDomain";
     {
         NSData  *imageData  = [NSData dataWithContentsOfURL:imageURL];
         if (imageData == nil) {
-            [weakSelf finishDownloadWithErrorCode:kInvalidURLDataErrorCode];
+            [weakSelf finishDownloadWithErrorCode:kInvalidURLDataErrorCode completion:completion];
             return;
         }
         
         UIImage *image      = [UIImage imageWithData:imageData];
         if (image == nil) {
-            [self finishDownloadWithErrorCode:kInvalidImageDataCode];
+            [self finishDownloadWithErrorCode:kInvalidImageDataCode completion:completion];
             return;
         }
         
         dispatch_async(dispatch_get_main_queue(), ^
         {
-            [weakSelf.delegate imageProvider:weakSelf didProvideImage:image forURLPath:urlPath];
+            if (completion) 
+                completion(image,nil);
         });
     });
 }
 
-- (void)finishDownloadWithErrorCode:(ImageDownloadErrorCode)errorCode{
+- (void)finishDownloadWithErrorCode:(ImageDownloadErrorCode)errorCode completion:(DEDImageProviderBlock)completion{
+    if (completion == nil)
+        return;
     
     if (![NSThread isMainThread])
     {
         dispatch_async(dispatch_get_main_queue(), ^
         {
-           [self finishDownloadWithErrorCode:errorCode];
+           [self finishDownloadWithErrorCode:errorCode completion:completion];
         });
         return;
     }
@@ -107,7 +112,7 @@ static NSString * const kImageProviderErrorDomain = @"ImageProviderErrorDomain";
                                           code:errorCode
                                       userInfo:@{ NSLocalizedDescriptionKey : localizedDescriptionString}];
     
-    [self.delegate imageProvider:self didFailWithError:error];
+    completion(nil, error);
 }
 
 

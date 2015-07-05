@@ -8,24 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@class ImageProvider,UIImage;
+@class UIImage;
 
-@protocol ImageProviderDelegate <NSObject>
-
-- (void)imageProvider:(ImageProvider*)imageProvider
-      didProvideImage:(UIImage*)image
-           forURLPath:(NSString*)urlPath;
-
-- (void)imageProvider:(ImageProvider *)imageProvider
-     didFailWithError:(NSError*)error;
-
-@end
+typedef void(^DEDImageProviderBlock)(UIImage *image, NSError *error);
 
 @interface ImageProvider : NSObject
 
-@property (weak, nonatomic) id <ImageProviderDelegate> delegate;
-
 + (instancetype)sharedInstance;
-- (void)provideImageForUrlPath:(NSString*)urlPath;
+
+- (void)provideImageForUrlPath:(NSString*)urlPath
+               completionBlock:(DEDImageProviderBlock)completion;
 
 @end
