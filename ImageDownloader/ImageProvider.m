@@ -9,6 +9,14 @@
 #import "ImageProvider.h"
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSUInteger, ImageDownloadErrorCode) {
+    kInvalidURLErrorCode,
+    kInvalidURLDataErrorCode,
+    kInvalidImageDataCode
+};
+
+static NSString * const kImageProviderErrorDomain = @"ImageProviderErrorDomain";
+
 @interface ImageProvider (){
     dispatch_queue_t downloadQueue;
 }
@@ -38,13 +46,30 @@
     return sharedInstance;
 }
 
-- (void)provideImageForUrlPath:(NSString*)urlPath{
+- (void)provideImageForUrlPath:(NSString*)urlPath {
+    urlPath = [urlPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSURL   *imageURL   = [NSURL URLWithString:urlPath];
+    if (imageURL == nil || imageURL.absoluteString.length == 0) {
+        [self finishDownloadWithErrorCode:kInvalidURLErrorCode];
+        return;
+    }
+    
     __weak typeof(self) weakSelf = self;
+    
     dispatch_async(downloadQueue,^
     {
-        NSURL   *imageURL   = [NSURL URLWithString:urlPath];
         NSData  *imageData  = [NSData dataWithContentsOfURL:imageURL];
+        if (imageData == nil) {
+            [weakSelf finishDownloadWithErrorCode:kInvalidURLDataErrorCode];
+            return;
+        }
+        
         UIImage *image      = [UIImage imageWithData:imageData];
+        if (image == nil) {
+            [self finishDownloadWithErrorCode:kInvalidImageDataCode];
+            return;
+        }
         
         dispatch_async(dispatch_get_main_queue(), ^
         {
@@ -52,5 +77,38 @@
         });
     });
 }
+
+- (void)finishDownloadWithErrorCode:(ImageDownloadErrorCode)errorCode{
+    
+    if (![NSThread isMainThread])
+    {
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
+           [self finishDownloadWithErrorCode:errorCode];
+        });
+        return;
+    }
+    
+    NSString *localizedDescriptionString = nil;
+    
+    switch (errorCode) {
+        case kInvalidURLErrorCode:
+            localizedDescriptionString = @"Invalid URL";
+            break;
+        case kInvalidURLDataErrorCode:
+            localizedDescriptionString = @"Unable to access data for URL";
+            break;
+        case kInvalidImageDataCode:
+            localizedDescriptionString = @"Invalid image data for URL";
+            break;
+    }
+    
+    NSError * error = [NSError errorWithDomain:kImageProviderErrorDomain
+                                          code:errorCode
+                                      userInfo:@{ NSLocalizedDescriptionKey : localizedDescriptionString}];
+    
+    [self.delegate imageProvider:self didFailWithError:error];
+}
+
 
 @end

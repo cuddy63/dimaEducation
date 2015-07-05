@@ -6,31 +6,39 @@
 //  Copyright (c) 2015 SoundCuddy. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "DEDImageDisplayViewController.h"
 #import "ImageProvider.h"
 
 static const NSTimeInterval kImageFadeInAnimationTime = 0.3;
 
-@interface ViewController () <ImageProviderDelegate>
+@interface DEDImageDisplayViewController () <ImageProviderDelegate>
 
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak,   nonatomic) IBOutlet UIImageView *imageView;
+@property (strong, nonatomic) NSString      *imageURLPath;
 
 @end
 
-@implementation ViewController
+@implementation DEDImageDisplayViewController
+
+- (void)setImageURLPath:(NSString *)imageUrlPath{
+    if (_imageURLPath != imageUrlPath && ![_imageURLPath isEqualToString:imageUrlPath]) {
+        _imageURLPath = imageUrlPath;
+        if (self.isViewLoaded)
+            [[ImageProvider sharedInstance] provideImageForUrlPath:self.imageURLPath];
+    }
+}
 
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [ImageProvider sharedInstance].delegate = self;
+    if (self.imageURLPath)
+         [[ImageProvider sharedInstance] provideImageForUrlPath:self.imageURLPath];
 }
 
 #pragma mark - IBActions
 
-- (IBAction)downloadImageButtonPressed:(id)sender {
-    [[ImageProvider sharedInstance] provideImageForUrlPath:@"http://instantsite.ru/gallery/image.php?album_id=12&image_id=19&view=no_count"];
-}
 
 #pragma mark - ImageProviderDelegate
 
@@ -41,6 +49,14 @@ static const NSTimeInterval kImageFadeInAnimationTime = 0.3;
     [self animateImageAppearance];
 }
 
+
+- (void)imageProvider:(ImageProvider *)imageProvider didFailWithError:(NSError *)error{
+    [[[UIAlertView alloc] initWithTitle:@"Download failed"
+                               message:error.localizedDescription
+                              delegate:nil
+                     cancelButtonTitle:@"OK"
+                     otherButtonTitles:nil] show];
+}
 
 #pragma mark - private
 
