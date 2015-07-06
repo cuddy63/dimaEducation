@@ -56,7 +56,8 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
-                        <color key="backgroundColor" red="0.2051795158808869" green="0.80747211664661844" blue="0.95200047348484851" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="1" green="0.55325360629999998" blue="0.79158756649999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="9f6-tw-BWM" secondAttribute="centerX" id="2o5-hR-TDF"/>
                             <constraint firstItem="uPd-Nd-oIo" firstAttribute="top" secondItem="oAE-XL-yUb" secondAttribute="bottom" constant="221" id="IIx-cg-Clw"/>
@@ -89,6 +90,8 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UVC-m8-x9f">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" red="1" green="0.55325360629999998" blue="0.79158756649999995" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>

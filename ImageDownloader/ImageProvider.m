@@ -20,6 +20,7 @@ static NSString * const kImageProviderErrorDomain = @"ImageProviderErrorDomain";
 @interface ImageProvider (){
     dispatch_queue_t downloadQueue;
 }
+@property (strong, nonatomic) NSCache *imageCache;
 
 @end
 
@@ -31,6 +32,8 @@ static NSString * const kImageProviderErrorDomain = @"ImageProviderErrorDomain";
     self = [super init];
     if (self) {
         downloadQueue = dispatch_queue_create("Image Download Queue", 0);
+        _imageCache = [[NSCache alloc] init];
+        _imageCache.totalCostLimit = 5 * 1024 * 1024;
     }
     return self;
 }
@@ -49,6 +52,7 @@ static NSString * const kImageProviderErrorDomain = @"ImageProviderErrorDomain";
 - (void)provideImageForUrlPath:(NSString*)urlPath
                completionBlock:(DEDImageProviderBlock)completion
 {
+    
     urlPath = [urlPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSURL   *imageURL   = [NSURL URLWithString:urlPath];
@@ -59,8 +63,17 @@ static NSString * const kImageProviderErrorDomain = @"ImageProviderErrorDomain";
     
     __weak typeof(self) weakSelf = self;
     
-    dispatch_async(downloadQueue,^
-    {
+    dispatch_async(downloadQueue,^{
+        NSData *cachedData = [_imageCache objectForKey:imageURL];
+        if (cachedData) {
+            UIImage *image = [UIImage imageWithData:cachedData];
+            if (completion)
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion(image, nil);
+                });
+            return;
+        }
+        
         NSData  *imageData  = [NSData dataWithContentsOfURL:imageURL];
         if (imageData == nil) {
             [weakSelf finishDownloadWithErrorCode:kInvalidURLDataErrorCode completion:completion];
@@ -72,12 +85,11 @@ static NSString * const kImageProviderErrorDomain = @"ImageProviderErrorDomain";
             [self finishDownloadWithErrorCode:kInvalidImageDataCode completion:completion];
             return;
         }
-        
-        dispatch_async(dispatch_get_main_queue(), ^
-        {
-            if (completion) 
-                completion(image,nil);
-        });
+        [_imageCache setObject:imageData forKey:imageURL];
+        if (completion)
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completion(image, nil);
+            });
     });
 }
 

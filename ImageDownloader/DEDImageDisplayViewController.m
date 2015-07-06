@@ -11,7 +11,7 @@
 
 static const NSTimeInterval kImageFadeInAnimationTime = 0.3;
 
-@interface DEDImageDisplayViewController () <ImageProviderDelegate>
+@interface DEDImageDisplayViewController ()
 
 @property (weak,   nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) NSString      *imageURLPath;
