@@ -39,14 +39,14 @@ static const NSTimeInterval kImageFadeInAnimationTime = 0.3;
 #pragma mark - private
 
 - (void) fetchData{
-    if (self.imageURLPath != nil && self.isViewLoaded)
+    if (self.imageURLPath == nil)
         return;
     
     __weak typeof(self) weakSelf = self;
     
     DEDImageProviderBlock block = ^(UIImage *image, NSError *error)
     {
-        if (error == nil || image != nil)
+        if (error == nil && image != nil)
             [weakSelf showImage:image];
         else
             [weakSelf showAlertWithError:error];
