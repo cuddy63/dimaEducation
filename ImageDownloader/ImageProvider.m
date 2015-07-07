@@ -49,6 +49,15 @@ static NSString * const kImageProviderErrorDomain = @"ImageProviderErrorDomain";
     return sharedInstance;
 }
 
+- (UIImage*)imageFromCacheWithURLpath:(NSString*) urlPath {
+    UIImage *result = nil;
+    NSData *imageData = [_imageCache objectForKey:[NSURL URLWithString:urlPath]];
+    if (imageData)
+        result = [UIImage imageWithData:imageData];
+    
+    return result;
+}
+
 - (void)provideImageForUrlPath:(NSString*)urlPath
                completionBlock:(DEDImageProviderBlock)completion
 {
@@ -62,18 +71,13 @@ static NSString * const kImageProviderErrorDomain = @"ImageProviderErrorDomain";
     }
     
     __weak typeof(self) weakSelf = self;
-    
+    UIImage* cachedImage = [weakSelf imageFromCacheWithURLpath:urlPath];
+    if (cachedImage) {
+        if (completion)
+            completion(cachedImage, nil);
+        return;
+    }
     dispatch_async(downloadQueue,^{
-        NSData *cachedData = [_imageCache objectForKey:imageURL];
-        if (cachedData) {
-            UIImage *image = [UIImage imageWithData:cachedData];
-            if (completion)
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    completion(image, nil);
-                });
-            return;
-        }
-        
         NSData  *imageData  = [NSData dataWithContentsOfURL:imageURL];
         if (imageData == nil) {
             [weakSelf finishDownloadWithErrorCode:kInvalidURLDataErrorCode completion:completion];

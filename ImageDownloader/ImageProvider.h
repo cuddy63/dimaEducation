@@ -17,6 +17,8 @@ typedef void(^DEDImageProviderBlock)(UIImage *image, NSError *error);
 
 + (instancetype)sharedInstance;
 
+- (UIImage*)imageFromCacheWithURLpath:(NSString*) urlPath;
+
 - (void)provideImageForUrlPath:(NSString*)urlPath
                completionBlock:(DEDImageProviderBlock)completion;
 

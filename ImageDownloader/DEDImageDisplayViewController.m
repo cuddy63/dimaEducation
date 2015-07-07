@@ -42,23 +42,26 @@ static const NSTimeInterval kImageFadeInAnimationTime = 0.3;
     if (self.imageURLPath == nil)
         return;
     
+    __block BOOL performedSync = YES;
     __weak typeof(self) weakSelf = self;
     
     DEDImageProviderBlock block = ^(UIImage *image, NSError *error)
     {
         if (error == nil && image != nil)
-            [weakSelf showImage:image];
+            [weakSelf showImage:image animated:!performedSync];
         else
             [weakSelf showAlertWithError:error];
     };
     
     [[ImageProvider sharedInstance] provideImageForUrlPath:self.imageURLPath
                                            completionBlock:block];
+    performedSync = NO;
 }
 
-- (void)showImage:(UIImage*)image{
+- (void)showImage:(UIImage*)image animated:(BOOL)animated{
     self.imageView.image = image;
-    [self animateImageAppearance];
+    if (animated)
+        [self animateImageAppearance];
 }
 
 
