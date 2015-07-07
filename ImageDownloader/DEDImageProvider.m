@@ -8,6 +8,7 @@
 
 #import "DEDImageProvider.h"
 #import <UIKit/UIKit.h>
+#import "NSString+Hash.h"
 
 typedef NS_ENUM(NSUInteger, ImageDownloadErrorCode) {
     kInvalidURLErrorCode,
@@ -21,6 +22,7 @@ static NSString * const kImageProviderErrorDomain = @"ImageProviderErrorDomain";
     dispatch_queue_t downloadQueue;
 }
 @property (strong, nonatomic) NSCache *imageCache;
+@property (strong, nonatomic) NSString* cachedFolderPath;
 
 @end
 
@@ -34,10 +36,27 @@ static NSString * const kImageProviderErrorDomain = @"ImageProviderErrorDomain";
         downloadQueue = dispatch_queue_create("Image Download Queue", 0);
         _imageCache = [[NSCache alloc] init];
         _imageCache.totalCostLimit = 5 * 1024 * 1024;
+        [self setupCachePath];
+       
     }
     return self;
 }
+#pragma mark - private
 
+- (void) setupCachePath {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    _cachedFolderPath = [paths objectAtIndex:0];
+    BOOL isDir = NO;
+    NSError* error;
+    if (![[NSFileManager defaultManager]fileExistsAtPath:_cachedFolderPath
+                                             isDirectory:&isDir]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:_cachedFolderPath
+                                  withIntermediateDirectories:NO
+                                                   attributes:nil
+                                                        error:&error];
+    }
+  
+}
 #pragma mark - public
 
 + (instancetype)sharedInstance {
@@ -52,10 +71,22 @@ static NSString * const kImageProviderErrorDomain = @"ImageProviderErrorDomain";
 - (UIImage*)imageFromCacheWithURLpath:(NSString*) urlPath {
     UIImage *result = nil;
     NSData *imageData = [_imageCache objectForKey:[NSURL URLWithString:urlPath]];
+    
+    if (imageData == nil){
+        NSString *localFilePath = [self filePathForImageURLPath:urlPath];
+        imageData = [[NSFileManager defaultManager] contentsAtPath:localFilePath];
+    }
+    
     if (imageData)
         result = [UIImage imageWithData:imageData];
-    
+
     return result;
+}
+
+-(NSString*) filePathForImageURLPath: (NSString*) urlPath {
+    NSString *appendingString = [NSString stringWithFormat:@"/%@",[urlPath hash_MD5]];
+    NSString* localFilePath = [_cachedFolderPath stringByAppendingString:appendingString];
+    return localFilePath;
 }
 
 - (void)provideImageForUrlPath:(NSString*)urlPath
@@ -78,6 +109,7 @@ static NSString * const kImageProviderErrorDomain = @"ImageProviderErrorDomain";
         return;
     }
     dispatch_async(downloadQueue,^{
+        
         NSData  *imageData  = [NSData dataWithContentsOfURL:imageURL];
         if (imageData == nil) {
             [weakSelf finishDownloadWithErrorCode:kInvalidURLDataErrorCode completion:completion];
@@ -89,7 +121,11 @@ static NSString * const kImageProviderErrorDomain = @"ImageProviderErrorDomain";
             [self finishDownloadWithErrorCode:kInvalidImageDataCode completion:completion];
             return;
         }
+        
         [_imageCache setObject:imageData forKey:imageURL];
+        BOOL saved = [imageData writeToFile:[self filePathForImageURLPath:urlPath] atomically:YES];
+        NSParameterAssert(saved);
+        
         if (completion)
             dispatch_async(dispatch_get_main_queue(), ^{
                 completion(image, nil);

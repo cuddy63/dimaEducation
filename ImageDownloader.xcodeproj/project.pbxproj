@@ -16,6 +16,7 @@
 		1912B47A1B411AC200DFCBC3 /* ImageDownloaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1912B4791B411AC200DFCBC3 /* ImageDownloaderTests.m */; };
 		1912B4861B411C2E00DFCBC3 /* DEDImageProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1912B4851B411C2E00DFCBC3 /* DEDImageProvider.m */; };
 		B806317A1B45223D009FB379 /* DEDTextInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B80631791B45223D009FB379 /* DEDTextInputViewController.m */; };
+		B87F6BD61B4C363C007C3470 /* NSString+Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = B87F6BD51B4C363C007C3470 /* NSString+Hash.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,8 @@
 		1912B4851B411C2E00DFCBC3 /* DEDImageProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEDImageProvider.m; sourceTree = "<group>"; };
 		B80631781B45223D009FB379 /* DEDTextInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DEDTextInputViewController.h; path = ImageDownloader.xcodeproj/../DEDTextInputViewController.h; sourceTree = SOURCE_ROOT; };
 		B80631791B45223D009FB379 /* DEDTextInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DEDTextInputViewController.m; path = ImageDownloader.xcodeproj/../DEDTextInputViewController.m; sourceTree = SOURCE_ROOT; };
+		B87F6BD41B4C363C007C3470 /* NSString+Hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Hash.h"; sourceTree = "<group>"; };
+		B87F6BD51B4C363C007C3470 /* NSString+Hash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Hash.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +90,7 @@
 		1912B45C1B411AC200DFCBC3 /* ImageDownloader */ = {
 			isa = PBXGroup;
 			children = (
+				B87F6BD31B4C3581007C3470 /* Categories */,
 				1912B4831B411C0200DFCBC3 /* ImageProvider */,
 				1912B4641B411AC200DFCBC3 /* DEDImageDisplayViewController.h */,
 				1912B4651B411AC200DFCBC3 /* DEDImageDisplayViewController.m */,
@@ -135,6 +139,15 @@
 				1912B4851B411C2E00DFCBC3 /* DEDImageProvider.m */,
 			);
 			name = ImageProvider;
+			sourceTree = "<group>";
+		};
+		B87F6BD31B4C3581007C3470 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				B87F6BD41B4C363C007C3470 /* NSString+Hash.h */,
+				B87F6BD51B4C363C007C3470 /* NSString+Hash.m */,
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,6 +251,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1912B4861B411C2E00DFCBC3 /* DEDImageProvider.m in Sources */,
+				B87F6BD61B4C363C007C3470 /* NSString+Hash.m in Sources */,
 				1912B4661B411AC200DFCBC3 /* DEDImageDisplayViewController.m in Sources */,
 				B806317A1B45223D009FB379 /* DEDTextInputViewController.m in Sources */,
 				1912B4631B411AC200DFCBC3 /* DEDAppDelegate.m in Sources */,
