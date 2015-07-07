@@ -7,7 +7,7 @@
 //
 
 #import "DEDImageDisplayViewController.h"
-#import "ImageProvider.h"
+#import "DEDImageProvider.h"
 
 static const NSTimeInterval kImageFadeInAnimationTime = 0.3;
 
@@ -53,7 +53,7 @@ static const NSTimeInterval kImageFadeInAnimationTime = 0.3;
             [weakSelf showAlertWithError:error];
     };
     
-    [[ImageProvider sharedInstance] provideImageForUrlPath:self.imageURLPath
+    [[DEDImageProvider sharedInstance] provideImageForUrlPath:self.imageURLPath
                                            completionBlock:block];
     performedSync = NO;
 }

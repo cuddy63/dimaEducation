@@ -13,7 +13,7 @@
 typedef void(^DEDImageProviderBlock)(UIImage *image, NSError *error);
 
 
-@interface ImageProvider : NSObject
+@interface DEDImageProvider : NSObject
 
 + (instancetype)sharedInstance;
 

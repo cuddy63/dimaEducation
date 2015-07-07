@@ -6,13 +6,13 @@
 //  Copyright (c) 2015 SoundCuddy. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "DEDAppDelegate.h"
 
-@interface AppDelegate ()
+@interface DEDAppDelegate ()
 
 @end
 
-@implementation AppDelegate
+@implementation DEDAppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {

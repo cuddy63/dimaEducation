@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 SoundCuddy. All rights reserved.
 //
 
-#import "ImageProvider.h"
+#import "DEDImageProvider.h"
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSUInteger, ImageDownloadErrorCode) {
@@ -17,14 +17,14 @@ typedef NS_ENUM(NSUInteger, ImageDownloadErrorCode) {
 
 static NSString * const kImageProviderErrorDomain = @"ImageProviderErrorDomain";
 
-@interface ImageProvider (){
+@interface DEDImageProvider (){
     dispatch_queue_t downloadQueue;
 }
 @property (strong, nonatomic) NSCache *imageCache;
 
 @end
 
-@implementation ImageProvider
+@implementation DEDImageProvider
 
 #pragma mark - init&dealloc
 
@@ -41,7 +41,7 @@ static NSString * const kImageProviderErrorDomain = @"ImageProviderErrorDomain";
 #pragma mark - public
 
 + (instancetype)sharedInstance {
-    static ImageProvider *sharedInstance = nil;
+    static DEDImageProvider *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedInstance = [[self alloc] init];

@@ -8,7 +8,7 @@
 
 #import "DEDTextInputViewController.h"
 #import "DEDImageDisplayViewController.h"
-#import "ImageProvider.h"
+#import "DEDImageProvider.h"
 
 @interface DEDTextInputViewController () <UITextFieldDelegate>
 
