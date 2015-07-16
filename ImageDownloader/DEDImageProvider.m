@@ -9,6 +9,7 @@
 #import "DEDImageProvider.h"
 #import <UIKit/UIKit.h>
 #import "NSString+Hash.h"
+#import "AFNetworking.h"
 
 typedef NS_ENUM(NSUInteger, ImageDownloadErrorCode) {
     kInvalidURLErrorCode,
@@ -21,9 +22,9 @@ static NSString * const kImageProviderErrorDomain = @"ImageProviderErrorDomain";
 @interface DEDImageProvider (){
     dispatch_queue_t downloadQueue;
 }
-@property (strong, nonatomic) NSCache *imageCache;
-@property (strong, nonatomic) NSString* cachedFolderPath;
-
+@property (nonatomic, strong) NSCache *imageCache;
+@property (nonatomic, strong) NSString* cachedFolderPath;
+@property (nonatomic, strong) AFHTTPRequestOperationManager* manager;
 @end
 
 @implementation DEDImageProvider
@@ -37,7 +38,7 @@ static NSString * const kImageProviderErrorDomain = @"ImageProviderErrorDomain";
         _imageCache = [[NSCache alloc] init];
         _imageCache.totalCostLimit = 5 * 1024 * 1024;
         [self setupCachePath];
-       
+        self.manager = [AFHTTPRequestOperationManager manager];
     }
     return self;
 }
@@ -58,6 +59,53 @@ static NSString * const kImageProviderErrorDomain = @"ImageProviderErrorDomain";
   
 }
 #pragma mark - public
+
+- (UIImage*) ddownloadImageWithAFNFromURL: (NSString*) urlPath
+                          withCompletion: (DEDImageProviderBlock) completionBlock {
+    NSURL* url = [NSURL URLWithString:urlPath];
+    __weak typeof(self) weakSelf = self;
+    UIImage* cachedImage = [weakSelf imageFromCacheWithURLpath:urlPath];
+    if (cachedImage) {
+        if (completionBlock)
+            completionBlock(cachedImage, nil);
+        return cachedImage;
+    }
+    NSURLRequest* urlRequest = [[NSURLRequest alloc] initWithURL:url];
+    
+    AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc]initWithRequest:urlRequest];
+    requestOperation.responseSerializer = [AFImageResponseSerializer serializer];
+    __block UIImage *image = [[UIImage alloc] init];
+    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        image = responseObject;
+        completionBlock(image, nil);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        completionBlock(nil, error);
+    }];
+    [requestOperation start];
+    return image;
+}
+
+- (UIImage*) downloadImageWithAFNFromURL: (NSString*) urlPath
+                           withCompletion: (DEDImageProviderBlock) completionBlock {
+    __weak typeof(self) weakSelf = self;
+    UIImage* cachedImage = [weakSelf imageFromCacheWithURLpath:urlPath];
+    if (cachedImage) {
+        if (completionBlock)
+            completionBlock(cachedImage, nil);
+        return cachedImage;
+    }
+    __block UIImage* image = [[UIImage alloc] init];
+    self.manager.responseSerializer = [AFImageResponseSerializer serializer];
+    [self.manager GET:urlPath
+           parameters:nil
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  image = responseObject;
+                  completionBlock(image, nil);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        completionBlock(nil, error);
+    }];
+    return image;
+}
 
 + (instancetype)sharedInstance {
     static DEDImageProvider *sharedInstance = nil;

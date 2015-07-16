@@ -22,4 +22,7 @@ typedef void(^DEDImageProviderBlock)(UIImage *image, NSError *error);
 - (void)provideImageForUrlPath:(NSString*)urlPath
                completionBlock:(DEDImageProviderBlock)completion;
 
+- (UIImage*) downloadImageWithAFNFromURL: (NSString*) urlPath
+                          withCompletion: (DEDImageProviderBlock) completionBlock;
+
 @end

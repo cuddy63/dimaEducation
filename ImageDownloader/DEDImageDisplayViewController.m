@@ -45,7 +45,15 @@ static const NSTimeInterval kImageFadeInAnimationTime = 0.3;
     __block BOOL performedSync = YES;
     __weak typeof(self) weakSelf = self;
     
-    DEDImageProviderBlock block = ^(UIImage *image, NSError *error)
+  /*  DEDImageProviderBlock block = ^(UIImage *image, NSError *error)
+    {
+        if (error == nil && image != nil)
+            [weakSelf showImage:image animated:!performedSync];
+        else
+            [weakSelf showAlertWithError:error];
+    }; */
+    
+    DEDImageProviderBlock AFNblock = ^(UIImage *image, NSError *error)
     {
         if (error == nil && image != nil)
             [weakSelf showImage:image animated:!performedSync];
@@ -53,8 +61,9 @@ static const NSTimeInterval kImageFadeInAnimationTime = 0.3;
             [weakSelf showAlertWithError:error];
     };
     
-    [[DEDImageProvider sharedInstance] provideImageForUrlPath:self.imageURLPath
-                                           completionBlock:block];
+//    [[DEDImageProvider sharedInstance] provideImageForUrlPath:self.imageURLPath
+//                                           completionBlock:block];
+    [[DEDImageProvider sharedInstance] downloadImageWithAFNFromURL: self.imageURLPath withCompletion: AFNblock];
     performedSync = NO;
 }
 
