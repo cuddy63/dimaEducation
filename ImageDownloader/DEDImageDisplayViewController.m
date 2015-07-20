@@ -8,13 +8,15 @@
 
 #import "DEDImageDisplayViewController.h"
 #import "DEDImageProvider.h"
+#import "DEDProgressView.h"
 
 static const NSTimeInterval kImageFadeInAnimationTime = 0.3;
 
 @interface DEDImageDisplayViewController ()
 
+@property (strong, nonatomic) IBOutlet UIProgressView *progressView;
 @property (weak,   nonatomic) IBOutlet UIImageView *imageView;
-@property (strong, nonatomic) NSString      *imageURLPath;
+@property (strong, nonatomic) DEDProgressView *myProgressView;
 
 @end
 
@@ -34,47 +36,54 @@ static const NSTimeInterval kImageFadeInAnimationTime = 0.3;
     [super viewDidLoad];
     if (self.imageURLPath)
         [self fetchData];
+    self.progressView.hidden = YES;
+    self.myProgressView = [[DEDProgressView alloc] initWithFrame:self.progressView.frame];
+    [self.view addSubview:self.myProgressView];
+}
+
+
+- (void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
+    self.myProgressView.frame = self.progressView.frame;
 }
 
 #pragma mark - private
 
-- (void) fetchData{
+- (void)fetchData {
     if (self.imageURLPath == nil)
         return;
     
     __block BOOL performedSync = YES;
     __weak typeof(self) weakSelf = self;
     
-  /*  DEDImageProviderBlock block = ^(UIImage *image, NSError *error)
-    {
-        if (error == nil && image != nil)
-            [weakSelf showImage:image animated:!performedSync];
-        else
-            [weakSelf showAlertWithError:error];
-    }; */
+    self.myProgressView.hidden = NO;
+    self.myProgressView.progress = 0.0;
     
-    DEDImageProviderBlock AFNblock = ^(UIImage *image, NSError *error)
+    DEDImageProviderDownloadBlock completion = ^(UIImage *image, NSError *error)
     {
         if (error == nil && image != nil)
             [weakSelf showImage:image animated:!performedSync];
         else
             [weakSelf showAlertWithError:error];
+        
+        weakSelf.myProgressView.hidden = YES;
     };
-    
-//    [[DEDImageProvider sharedInstance] provideImageForUrlPath:self.imageURLPath
-//                                           completionBlock:block];
-    [[DEDImageProvider sharedInstance] downloadImageWithAFNFromURL: self.imageURLPath withCompletion: AFNblock];
+    [[DEDImageProvider sharedInstance] downloadImageWithAFNFromURL:self.imageURLPath
+                                                     progressBlock:^(CGFloat progress) {
+                                                         weakSelf.myProgressView.progress = progress;
+                                                     } withCompletion:completion];
     performedSync = NO;
+    
 }
 
-- (void)showImage:(UIImage*)image animated:(BOOL)animated{
+- (void)showImage:(UIImage*)image animated:(BOOL)animated {
     self.imageView.image = image;
     if (animated)
         [self animateImageAppearance];
 }
 
 
-- (void)showAlertWithError:(NSError *)error{
+- (void)showAlertWithError:(NSError *)error {
     [[[UIAlertView alloc] initWithTitle:@"Download failed"
                                 message:error.localizedDescription
                                delegate:nil
@@ -82,7 +91,7 @@ static const NSTimeInterval kImageFadeInAnimationTime = 0.3;
                       otherButtonTitles:nil] show];
 }
 
-- (void)animateImageAppearance{
+- (void)animateImageAppearance {
     CATransition *transition = [CATransition animation];
     transition.duration = kImageFadeInAnimationTime;
     transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];

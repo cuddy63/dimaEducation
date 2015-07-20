@@ -7,22 +7,26 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DEDImageDisplayViewController.h"
 
-@class UIImage;
+@class UIImage, UIProgressView;
 
-typedef void(^DEDImageProviderBlock)(UIImage *image, NSError *error);
+typedef void(^DEDImageProviderDownloadBlock)(UIImage *image, NSError *error);
+typedef void(^DEDImageProviderProgressBlock)(CGFloat progress);
 
 
 @interface DEDImageProvider : NSObject
 
+@property (nonatomic, strong) NSString *cachedFolderPath;
+
 + (instancetype)sharedInstance;
 
-- (UIImage*)imageFromCacheWithURLpath:(NSString*) urlPath;
+- (void)downloadImageWithAFNFromURL:(NSString*)urlPath
+                      progressBlock:(DEDImageProviderProgressBlock)progressBlock
+                     withCompletion:(DEDImageProviderDownloadBlock)completionBlock;
 
-- (void)provideImageForUrlPath:(NSString*)urlPath
-               completionBlock:(DEDImageProviderBlock)completion;
+- (NSString*)filePathForImageURLPath:(NSString*)urlPath;
 
-- (UIImage*) downloadImageWithAFNFromURL: (NSString*) urlPath
-                          withCompletion: (DEDImageProviderBlock) completionBlock;
+- (void)cacheCleaning;
 
 @end

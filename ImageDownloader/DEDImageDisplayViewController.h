@@ -10,6 +10,8 @@
 
 @interface DEDImageDisplayViewController : UIViewController
 
+@property (strong, nonatomic) NSString      *imageURLPath;
+
 - (void)setImageURLPath:(NSString*)imageUrlPath;
 
 @end

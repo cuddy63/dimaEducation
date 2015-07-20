@@ -93,18 +93,27 @@
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" red="1" green="0.55325360629999998" blue="0.79158756649999995" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ALr-8t-S10">
+                                <rect key="frame" x="225" y="578" width="150" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="XPI-gd-mqO"/>
+                                </constraints>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="UVC-m8-x9f" secondAttribute="bottom" id="DYL-6v-cGb"/>
                             <constraint firstAttribute="trailing" secondItem="UVC-m8-x9f" secondAttribute="trailing" id="Vgc-m1-Xco"/>
                             <constraint firstItem="UVC-m8-x9f" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="Y2G-ef-Dse"/>
+                            <constraint firstAttribute="centerX" secondItem="ALr-8t-S10" secondAttribute="centerX" id="a0Z-3z-u3Q"/>
                             <constraint firstItem="UVC-m8-x9f" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="bJb-iy-QgA"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="ALr-8t-S10" secondAttribute="bottom" constant="20" id="ruu-LS-JM8"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="D9o-W0-D3w"/>
                     <connections>
                         <outlet property="imageView" destination="UVC-m8-x9f" id="nwU-fS-dCY"/>
+                        <outlet property="progressView" destination="ALr-8t-S10" id="ASB-lr-ARg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

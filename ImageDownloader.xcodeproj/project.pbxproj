@@ -17,6 +17,7 @@
 		1912B4861B411C2E00DFCBC3 /* DEDImageProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 1912B4851B411C2E00DFCBC3 /* DEDImageProvider.m */; };
 		51E426BC54BD03EB0666CDCB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 439349799A9668D2243D0F15 /* libPods.a */; };
 		B806317A1B45223D009FB379 /* DEDTextInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B80631791B45223D009FB379 /* DEDTextInputViewController.m */; };
+		B838C44B1B5CD6E6003E3A97 /* DEDProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = B838C44A1B5CD6E6003E3A97 /* DEDProgressView.m */; };
 		B87F6BD61B4C363C007C3470 /* NSString+Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = B87F6BD51B4C363C007C3470 /* NSString+Hash.m */; };
 /* End PBXBuildFile section */
 
@@ -50,6 +51,8 @@
 		A92DDC09749EDE9EE3EBB68B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		B80631781B45223D009FB379 /* DEDTextInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DEDTextInputViewController.h; path = ImageDownloader.xcodeproj/../DEDTextInputViewController.h; sourceTree = SOURCE_ROOT; };
 		B80631791B45223D009FB379 /* DEDTextInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DEDTextInputViewController.m; path = ImageDownloader.xcodeproj/../DEDTextInputViewController.m; sourceTree = SOURCE_ROOT; };
+		B838C4491B5CD6E6003E3A97 /* DEDProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEDProgressView.h; sourceTree = "<group>"; };
+		B838C44A1B5CD6E6003E3A97 /* DEDProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEDProgressView.m; sourceTree = "<group>"; };
 		B87F6BD41B4C363C007C3470 /* NSString+Hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Hash.h"; sourceTree = "<group>"; };
 		B87F6BD51B4C363C007C3470 /* NSString+Hash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Hash.m"; sourceTree = "<group>"; };
 		EEB81C30350D5D4FAFDC4411 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -97,6 +100,7 @@
 		1912B45C1B411AC200DFCBC3 /* ImageDownloader */ = {
 			isa = PBXGroup;
 			children = (
+				B838C4481B5CD6C1003E3A97 /* Views */,
 				B87F6BD31B4C3581007C3470 /* Categories */,
 				1912B4831B411C0200DFCBC3 /* ImageProvider */,
 				1912B4641B411AC200DFCBC3 /* DEDImageDisplayViewController.h */,
@@ -155,6 +159,15 @@
 				EEB81C30350D5D4FAFDC4411 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		B838C4481B5CD6C1003E3A97 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B838C4491B5CD6E6003E3A97 /* DEDProgressView.h */,
+				B838C44A1B5CD6E6003E3A97 /* DEDProgressView.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		B87F6BD31B4C3581007C3470 /* Categories */ = {
@@ -315,6 +328,7 @@
 				B806317A1B45223D009FB379 /* DEDTextInputViewController.m in Sources */,
 				1912B4631B411AC200DFCBC3 /* DEDAppDelegate.m in Sources */,
 				1912B4601B411AC200DFCBC3 /* main.m in Sources */,
+				B838C44B1B5CD6E6003E3A97 /* DEDProgressView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
