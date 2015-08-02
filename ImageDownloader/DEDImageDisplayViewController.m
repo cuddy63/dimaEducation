@@ -10,6 +10,7 @@
 #import "DEDImageProvider.h"
 #import "DEDProgressView.h"
 
+@class DEDTextInputViewController;
 static const NSTimeInterval kImageFadeInAnimationTime = 0.3;
 
 @interface DEDImageDisplayViewController ()

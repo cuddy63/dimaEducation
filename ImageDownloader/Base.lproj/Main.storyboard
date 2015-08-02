@@ -19,7 +19,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZY5-Nc-bqc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-941" y="238"/>
+            <point key="canvasLocation" x="-979" y="238"/>
         </scene>
         <!--Text Input View Controller-->
         <scene sceneID="KJb-eP-yJR">
@@ -48,28 +48,46 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter URL" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uPd-Nd-oIo">
-                                <rect key="frame" x="16" y="285" width="568" height="30"/>
+                                <rect key="frame" x="16" y="141" width="568" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Hog-Fa-Qb6"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="8md-Pr-ge1">
+                                <rect key="frame" x="16" y="179" width="568" height="363"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="363" id="Rg0-FW-qGf"/>
+                                    <constraint firstAttribute="width" constant="568" id="dlt-2u-W1P"/>
+                                </constraints>
+                                <color key="sectionIndexBackgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexTrackingBackgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="qMw-96-Rn6" id="Oqf-x2-y77"/>
+                                    <outlet property="delegate" destination="qMw-96-Rn6" id="PGg-FY-ZM0"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="tintColor" red="1" green="0.55325360629999998" blue="0.79158756649999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="9f6-tw-BWM" secondAttribute="centerX" id="2o5-hR-TDF"/>
-                            <constraint firstItem="uPd-Nd-oIo" firstAttribute="top" secondItem="oAE-XL-yUb" secondAttribute="bottom" constant="221" id="IIx-cg-Clw"/>
+                            <constraint firstItem="uPd-Nd-oIo" firstAttribute="top" secondItem="oAE-XL-yUb" secondAttribute="bottom" constant="77" id="Be5-UK-xAg"/>
+                            <constraint firstAttribute="centerX" secondItem="8md-Pr-ge1" secondAttribute="centerX" id="X4C-Y5-Uon"/>
                             <constraint firstItem="uPd-Nd-oIo" firstAttribute="leading" secondItem="89T-5x-wCg" secondAttribute="leadingMargin" id="eEA-T9-Y5a"/>
                             <constraint firstItem="uPd-Nd-oIo" firstAttribute="trailing" secondItem="89T-5x-wCg" secondAttribute="trailingMargin" id="fQM-bF-UwS"/>
+                            <constraint firstItem="9f6-tw-BWM" firstAttribute="top" secondItem="8md-Pr-ge1" secondAttribute="bottom" constant="8" id="n62-AF-C6f"/>
                             <constraint firstItem="ZUW-GE-nAH" firstAttribute="top" secondItem="9f6-tw-BWM" secondAttribute="bottom" constant="20" id="pLM-lu-Nod"/>
                             <constraint firstAttribute="centerX" secondItem="uPd-Nd-oIo" secondAttribute="centerX" id="xNx-KP-UwI"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="kcG-dI-t6m"/>
                     <connections>
+                        <outlet property="tableView" destination="8md-Pr-ge1" id="H7e-GN-0oR"/>
                         <outlet property="textField" destination="uPd-Nd-oIo" id="Wch-0X-1V6"/>
+                        <segue destination="vXZ-lx-hvc" kind="push" identifier="pushFromCellSegue" id="CO2-Qa-uIi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Fo-Ts-y2A" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -121,4 +139,7 @@
             <point key="canvasLocation" x="515" y="238"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="CO2-Qa-uIi"/>
+    </inferredMetricsTieBreakers>
 </document>
